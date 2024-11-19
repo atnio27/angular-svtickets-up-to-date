@@ -1,5 +1,5 @@
 <div class="mt-4">
-	<form (ngSubmit)="addEvent()" #eventForm="ngForm">
+	<form (ngSubmit)="addEvent()">
 		<div class="mb-3">
 			<label for="title" class="form-label">Title</label>
 			<input type="text" class="form-control" name="title" id="title" [(ngModel)]="newEvent.title"
