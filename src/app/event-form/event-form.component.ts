@@ -17,6 +17,8 @@ export class EventFormComponent {
   #destroyRef = inject(DestroyRef);
   #router = inject(Router);
 
+  saved = false;
+
   newEvent = {
     title: '',
     description: '',
@@ -30,7 +32,15 @@ export class EventFormComponent {
       .addEvent(this.newEvent)
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe(() => {
+        this.saved = true;
         this.#router.navigate(['/events']);
       });
+  }
+
+  canDeactivate() {
+    return (
+      this.saved ||
+      confirm('Do you want to leave the page? Changes will be lost...')
+    );
   }
 }
