@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#">{{title}}</a>
+		<ul class="navbar-nav me-auto mb-lg-0">
+			<li class="nav-item">
+				<a class="nav-link active" [routerLink]="['/events']" [routerLinkActive]="['active']"
+					[routerLinkActiveOptions]="{ exact: true }">
+					Home</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" [routerLink]="['/events/add']" [routerLinkActive]="['active']">New event</a>
+			</li>
+		</ul>
+		<!-- <ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link" href="#" id="logout">Logout</a>
+			</li>
+		</ul> -->
+	</div>
+</nav>
