@@ -5,6 +5,7 @@ import { EventDetailComponent } from './event-detail/event-detail.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { numericIdGuardGuard } from './guards/numeric-id-guard.guard';
 import { leavePageGuardGuard } from './guards/leave-page-guard.guard';
+import { eventResolverResolver } from './resolvers/event-resolver.resolver';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,9 @@ export const routes: Routes = [
       },
       {
         path: ':id',
+        resolve: {
+          event: eventResolverResolver,
+        },
         canActivate: [numericIdGuardGuard],
         component: EventDetailComponent,
       },

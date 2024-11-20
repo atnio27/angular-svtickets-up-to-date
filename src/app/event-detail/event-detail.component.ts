@@ -1,16 +1,8 @@
-import {
-  Component,
-  effect,
-  inject,
-  input,
-  numberAttribute,
-} from '@angular/core';
+import { Component, effect, inject, input } from '@angular/core';
 import { EventCardComponent } from '../event-card/event-card.component';
-import { EventsService } from '../services/events.service';
 import { Title } from '@angular/platform-browser';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { switchMap } from 'rxjs';
 import { Router } from '@angular/router';
+import { MyEvent } from '../interfaces/my-event';
 
 @Component({
   selector: 'event-detail',
@@ -20,21 +12,16 @@ import { Router } from '@angular/router';
   styleUrl: './event-detail.component.css',
 })
 export class EventDetailComponent {
-  id = input.required({ transform: numberAttribute });
-  #eventsService = inject(EventsService);
+  event = input.required<MyEvent>();
+  // #eventsService = inject(EventsService);
   #title = inject(Title);
-  event = toSignal(
-    toObservable(this.id).pipe(
-      switchMap((id) => this.#eventsService.getEvent(id))
-    )
-  );
 
   #router = inject(Router);
 
   constructor() {
     effect(() => {
       if (this.event()) {
-        this.#title.setTitle(this.event()!.title + ' | Angular Products');
+        this.#title.setTitle(this.event().title + ' | Angular Products');
       }
     });
     // effect(() => {
