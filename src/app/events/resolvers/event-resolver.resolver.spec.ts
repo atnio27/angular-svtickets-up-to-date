@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { ResolveFn } from '@angular/router';
 
 import { eventResolverResolver } from './event-resolver.resolver';
-import { MyEvent } from '../interfaces/my-event';
+import { MyEvent } from '../../shared/interfaces/my-event';
 
 describe('eventResolverResolver', () => {
   const executeResolver: ResolveFn<MyEvent> = (...resolverParameters) =>

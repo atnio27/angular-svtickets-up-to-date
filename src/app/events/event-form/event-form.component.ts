@@ -1,9 +1,9 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { EncodeBase64Directive } from '../directives/encode-base64.directive';
-import { EventsService } from '../services/events.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
+import { EncodeBase64Directive } from '../../shared/directives/encode-base64.directive';
+import { EventsService } from '../services/events.service';
 
 @Component({
   selector: 'event-form',

@@ -4,8 +4,10 @@ import { CanDeactivateFn } from '@angular/router';
 import { leavePageGuardGuard } from './leave-page-guard.guard';
 
 describe('leavePageGuardGuard', () => {
-  const executeGuard: CanDeactivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => leavePageGuardGuard(...guardParameters));
+  const executeGuard: CanDeactivateFn = (...guardParameters) =>
+    TestBed.runInInjectionContext(() =>
+      leavePageGuardGuard(...guardParameters)
+    );
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

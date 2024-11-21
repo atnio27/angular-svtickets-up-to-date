@@ -2,7 +2,7 @@ import { Component, effect, inject, input } from '@angular/core';
 import { EventCardComponent } from '../event-card/event-card.component';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { MyEvent } from '../interfaces/my-event';
+import { MyEvent } from '../../shared/interfaces/my-event';
 
 @Component({
   selector: 'event-detail',
@@ -13,7 +13,6 @@ import { MyEvent } from '../interfaces/my-event';
 })
 export class EventDetailComponent {
   event = input.required<MyEvent>();
-  // #eventsService = inject(EventsService);
   #title = inject(Title);
 
   #router = inject(Router);
@@ -21,7 +20,7 @@ export class EventDetailComponent {
   constructor() {
     effect(() => {
       if (this.event()) {
-        this.#title.setTitle(this.event().title + ' | Angular Products');
+        this.#title.setTitle(this.event().title + ' | Angular Events');
       }
     });
     // effect(() => {
