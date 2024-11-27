@@ -1,5 +1,9 @@
 import { CanDeactivateFn } from '@angular/router';
-import { CanComponentDeactivate } from '../interfaces/can-component-deactivate';
+import { Observable } from 'rxjs';
+
+export interface CanComponentDeactivate {
+  canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
+}
 
 export const leavePageGuardGuard: CanDeactivateFn<CanComponentDeactivate> = (
   component
