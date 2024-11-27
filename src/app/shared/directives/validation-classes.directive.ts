@@ -24,9 +24,9 @@ export class ValidationClassesDirective {
   touched = signal(false);
 
   inputClass = computed(() => {
-    const touched = this.touched(); // dependencia
-    const validationClasses = this.validationClasses(); // dependencia
-    this.valueChanges(); // dependencia
+    const touched = this.touched();
+    const validationClasses = this.validationClasses();
+    this.valueChanges();
 
     return untracked(() => {
       if (touched) {

@@ -5,11 +5,19 @@ import { Router } from '@angular/router';
 import { EncodeBase64Directive } from '../../shared/directives/encode-base64.directive';
 import { EventsService } from '../services/events.service';
 import { ValidationClassesDirective } from '../../shared/directives/validation-classes.directive';
+import { MinDateDirective } from '../../shared/directives/min-date.directive';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'event-form',
   standalone: true,
-  imports: [FormsModule, EncodeBase64Directive, ValidationClassesDirective],
+  imports: [
+    FormsModule,
+    EncodeBase64Directive,
+    ValidationClassesDirective,
+    MinDateDirective,
+    DatePipe,
+  ],
   templateUrl: './event-form.component.html',
   styleUrl: './event-form.component.css',
 })
@@ -19,6 +27,7 @@ export class EventFormComponent {
   #router = inject(Router);
 
   saved = false;
+  minDateToCheck: string = new Date().toISOString().split('T')[0];
 
   newEvent = {
     title: '',
@@ -36,6 +45,12 @@ export class EventFormComponent {
         this.saved = true;
         this.#router.navigate(['/events']);
       });
+  }
+
+  checkImage(fileInput: HTMLInputElement) {
+    if (!fileInput.files || fileInput.files.length === 0) {
+      this.newEvent.image = '';
+    }
   }
 
   canDeactivate() {
