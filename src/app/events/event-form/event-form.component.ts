@@ -4,11 +4,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { EncodeBase64Directive } from '../../shared/directives/encode-base64.directive';
 import { EventsService } from '../services/events.service';
+import { ValidationClassesDirective } from '../../shared/directives/validation-classes.directive';
 
 @Component({
   selector: 'event-form',
   standalone: true,
-  imports: [FormsModule, EncodeBase64Directive],
+  imports: [FormsModule, EncodeBase64Directive, ValidationClassesDirective],
   templateUrl: './event-form.component.html',
   styleUrl: './event-form.component.css',
 })

@@ -3,31 +3,72 @@
 		<div class="mb-3">
 			<label for="title" class="form-label">Title</label>
 			<input type="text" class="form-control" name="title" id="title" [(ngModel)]="newEvent.title"
-				placeholder="Enter title">
-			<div class="invalid-feedback">Title is required and can only contain letters and spaces.</div>
+				placeholder="Enter title" required minlength="5" pattern="^[a-zA-Z][a-zA-Z ]*$" #titleModel="ngModel"
+				[validationClasses]="{
+					valid: 'is-valid', invalid: 'is-invalid'
+				}">
+
+			@if(titleModel.errors?.['required']) {
+			<div class="invalid-feedback">Title cannot be empty</div>
+			}
+
+			@if(titleModel.errors?.['pattern']) {
+			<div class="invalid-feedback">
+				Title must start with a letter and can only contain letters and spaces
+			</div>
+			} @else if (titleModel.errors?.['minlength']){
+			<div class="invalid-feedback">
+				You must enter at least
+				{{titleModel.errors?.['minlength'].requiredLength - titleModel.errors?.['minlength'].actualLength}}
+				characters more
+			</div>
+			}
+
 		</div>
 		<div class="mb-3">
 			<label for="date" class="form-label">Date</label>
-			<input type="date" class="form-control" id="date" [(ngModel)]="newEvent.date" name="date">
+			<input type="date" class="form-control" id="date" [(ngModel)]="newEvent.date" name="date" required>
 			<div class="invalid-feedback">Date is required.</div>
 		</div>
 		<div class="mb-3">
 			<label for="description" class="form-label">Description</label>
-			<textarea class="form-control" id="description" [(ngModel)]="newEvent.description" name="description"
-				rows="3"></textarea>
+			<textarea class="form-control" id="description" [(ngModel)]="newEvent.description" name="description" rows="3"
+				required #descModel="ngModel" [validationClasses]="{
+					valid: 'is-valid', invalid: 'is-invalid'
+				}"></textarea>
+
+			@if (descModel.errors?.['required']) {
 			<div class="invalid-feedback">Description is required.</div>
+			}
+
 		</div>
 		<div class="mb-3">
 			<label for="price" class="form-label">Price (in €)</label>
 			<input type="number" class="form-control" id="price" [(ngModel)]="newEvent.price" name="price" min="0.00"
-				max="10000.00" step="0.01" />
+				step="0.01" required #priceModel="ngModel" [validationClasses]="{
+					valid: 'is-valid', invalid: 'is-invalid'
+				}" />
+
+			@if (priceModel.errors?.['required']) {
+			<div class="invalid-feedback">Price is required.</div>
+			}
+
+			@if (priceModel.errors?.['min']) {
 			<div class="invalid-feedback">Price must be a positive number.</div>
+			}
+
 		</div>
 		<div class="mb-3">
 			<label for="image" class="form-label">Image</label>
 			<input type="file" encodeBase64 (encoded)="newEvent.image = $event" class="form-control" id="image" name="image"
-				ngModel>
+				ngModel required #imageModel="ngModel" [validationClasses]="{
+					valid: 'is-valid', invalid: 'is-invalid'
+				}">
+
+			@if (imageModel.errors?.['required']) {
 			<div class="invalid-feedback">An image is required.</div>
+			}
+
 		</div>
 		@if (newEvent.image) {
 		<img [src]="newEvent.image" alt="" id="imgPreview" class="img-thumbnail mb-3">
