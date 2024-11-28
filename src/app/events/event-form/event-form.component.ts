@@ -1,5 +1,10 @@
 import { Component, DestroyRef, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { EncodeBase64Directive } from '../../shared/directives/encode-base64.directive';
@@ -17,11 +22,22 @@ import { DatePipe } from '@angular/common';
     ValidationClassesDirective,
     MinDateDirective,
     DatePipe,
+    ReactiveFormsModule,
   ],
   templateUrl: './event-form.component.html',
   styleUrl: './event-form.component.css',
 })
 export class EventFormComponent {
+  eventForm = new FormGroup({
+    title: new FormControl(''),
+    description: new FormControl(''),
+    price: new FormControl(0),
+    image: new FormControl(''),
+    date: new FormControl(''),
+  });
+
+  imageBase64 = '';
+
   #eventsService = inject(EventsService);
   #destroyRef = inject(DestroyRef);
   #router = inject(Router);
