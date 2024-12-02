@@ -1,25 +1,25 @@
 <div class="mt-4">
-	<form (ngSubmit)="addEvent()" #addForm="ngForm">
+	<form (ngSubmit)="addEvent()" [formGroup]="eventForm">
 		<div class="mb-3">
 			<label for="title" class="form-label">Title</label>
-			<input type="text" class="form-control" name="title" id="title" [(ngModel)]="newEvent.title"
-				placeholder="Enter title" required minlength="5" pattern="^[a-zA-Z][a-zA-Z ]*$" #titleModel="ngModel"
-				[validationClasses]="{
-					valid: 'is-valid', invalid: 'is-invalid'
-				}">
+			<input type="text" class="form-control" formControlName="title" placeholder="Enter title" [validationClasses]="{
+			valid: 'is-valid', invalid: 'is-invalid'
+			}">
 
-			@if(titleModel.errors?.['required']) {
+			@let titleErrors = eventForm.get('title')?.errors;
+
+			@if(titleErrors?.['required']) {
 			<div class="invalid-feedback">Title cannot be empty</div>
 			}
 
-			@if(titleModel.errors?.['pattern']) {
+			@if(titleErrors?.['pattern']) {
 			<div class="invalid-feedback">
 				Title must start with a letter and can only contain letters and spaces
 			</div>
-			} @else if (titleModel.errors?.['minlength']){
+			} @else if (titleErrors?.['minlength']){
 			<div class="invalid-feedback">
 				You must enter at least
-				{{titleModel.errors?.['minlength'].requiredLength - titleModel.errors?.['minlength'].actualLength}}
+				{{titleErrors?.['minlength'].requiredLength - titleErrors?.['minlength'].actualLength}}
 				characters more
 			</div>
 			}
@@ -27,66 +27,71 @@
 
 		<div class="mb-3">
 			<label for="date" class="form-label">Date</label>
-			<input type="date" class="form-control" id="date" [(ngModel)]="newEvent.date" #dateModel="ngModel" name="date"
-				required minDate={{minDateToCheck}} [validationClasses]="{
+			<input type="date" class="form-control" formControlName="date" placeholder="Enter date" [validationClasses]="{
 					valid: 'is-valid', invalid: 'is-invalid'
 				}">
 
-			@if (dateModel.errors?.['required']) {
+			@let dateErrors = eventForm.get('date')?.errors;
+
+			@if (dateErrors?.['required']) {
 			<div class="invalid-feedback">Date is required.</div>
 			}
 
-			@if (dateModel.errors?.['minDate']) {
-			<div class="invalid-feedback">The date can't be before {{minDateToCheck | date:'MM/dd/yyyy'}}</div>
+			@if (dateErrors?.['minDate']) {
+			<div class="invalid-feedback">The date can't be before {{todayDate | date:'MM/dd/yyyy'}}</div>
 			}
 		</div>
 
 		<div class="mb-3">
 			<label for="description" class="form-label">Description</label>
-			<textarea class="form-control" id="description" [(ngModel)]="newEvent.description" name="description" rows="3"
-				required #descModel="ngModel" [validationClasses]="{
+			<textarea class="form-control" rows="3" formControlName="description" [validationClasses]="{
 					valid: 'is-valid', invalid: 'is-invalid'
 				}"></textarea>
 
-			@if (descModel.errors?.['required']) {
+			@let descErrors = eventForm.get('description')?.errors;
+
+			@if (descErrors?.['required']) {
 			<div class="invalid-feedback">Description is required.</div>
 			}
 
 		</div>
 		<div class="mb-3">
 			<label for="price" class="form-label">Price (in €)</label>
-			<input type="number" class="form-control" id="price" [(ngModel)]="newEvent.price" name="price" min="0.00"
-				step="0.01" required #priceModel="ngModel" [validationClasses]="{
+			<input type="number" class="form-control" step="0.01" formControlName="price" [validationClasses]="{
 					valid: 'is-valid', invalid: 'is-invalid'
 				}" />
 
-			@if (priceModel.errors?.['required']) {
+			@let priceErrors = eventForm.get('price')?.errors;
+
+			@if (priceErrors?.['required']) {
 			<div class="invalid-feedback">Price is required.</div>
 			}
 
-			@if (priceModel.errors?.['min']) {
+			@if (priceErrors?.['min']) {
 			<div class="invalid-feedback">Price must be a positive number.</div>
 			}
 		</div>
 
 		<div class="mb-3">
 			<label for="image" class="form-label">Image</label>
-			<input type="file" #fileInput encodeBase64 (encoded)="newEvent.image = $event" class="form-control" id="image"
-				name="image" ngModel required #imageModel="ngModel" [validationClasses]="{
+			<input type="file" formControlName="image" #fileInput encodeBase64 (encoded)="imageBase64 = $event"
+				class="form-control" id="image" name="image" [validationClasses]="{
 					valid: 'is-valid', invalid: 'is-invalid'
-				}" (change)="checkImage(fileInput)">
+				}" formControlName="image" (change)="checkImage(fileInput)">
 
-			@if (imageModel.errors?.['required']) {
+			@let imageErrors = eventForm.get('image')?.errors;
+
+			@if (imageErrors?.['required']) {
 			<div class="invalid-feedback">An image is required.</div>
 			}
 		</div>
 
-		@if (newEvent.image) {
-		<img [src]="newEvent.image" alt="" id="imgPreview" class="img-thumbnail mb-3">
+		@if (imageBase64) {
+		<img [src]="imageBase64" alt="" id="imgPreview" class="img-thumbnail mb-3">
 		}
-
 		<div>
-			<button type="submit" class="btn btn-primary" [disabled]="addForm.invalid">Create</button>
+
+			<button type="submit" class="btn btn-primary" [disabled]="eventForm.invalid">Create</button>
 		</div>
 	</form>
 </div>
