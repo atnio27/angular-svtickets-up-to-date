@@ -26,7 +26,7 @@ export class EventsService {
       .pipe(map((resp) => resp.event));
   }
 
-  addEvent(event: MyEvent): Observable<MyEvent> {
+  insertEvent(event: MyEvent): Observable<MyEvent> {
     return this.#http
       .post<SingleEventResponse>(`${this.#eventsUrl}`, event)
       .pipe(map((resp) => resp.event));
