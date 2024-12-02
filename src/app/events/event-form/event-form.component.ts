@@ -16,7 +16,7 @@ import { ValidationClassesDirective } from '../../shared/directives/validation-c
 import { DatePipe } from '@angular/common';
 import { MyEvent } from '../../shared/interfaces/my-event';
 import { CanComponentDeactivate } from '../../shared/guards/leave-page-guard.guard';
-import { minDateValidator } from '../../shared/directives/min-date.validator';
+import { minDateValidator } from '../../shared/validators/min-date.validator';
 
 @Component({
   selector: 'event-form',
