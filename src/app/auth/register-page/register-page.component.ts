@@ -18,17 +18,25 @@ import { JsonPipe } from '@angular/common';
 export class RegisterPageComponent {
   #fb = inject(NonNullableFormBuilder);
 
-  // DEBUGUEAR ESTO
+  emailConfirm = '';
 
   registerForm = this.#fb.group({
     name: ['', Validators.required],
-    emailGroup: this.#fb.group(
-      {
-        email: ['', [Validators.required, Validators.email]],
-        emailConfirm: ['', [Validators.required, Validators.email]],
-      },
-      { validators: matchEmailValidator }
-    ),
+    email: ['', [Validators.required, Validators.email]],
+    emailConfirm: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(4)]],
   });
+
+  constructor() {
+    const originalEmail = this.registerForm.get('email');
+    const emailToConfirm = this.registerForm.get('emailConfirm');
+
+    if (originalEmail) {
+      emailToConfirm?.setValidators([
+        Validators.required,
+        Validators.email,
+        matchEmailValidator(originalEmail),
+      ]);
+    }
+  }
 }

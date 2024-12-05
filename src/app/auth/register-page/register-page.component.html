@@ -15,55 +15,41 @@
 			}
 		</div>
 
-		<div formGroupName="emailGroup">
-			@let emailGroup = registerForm.get('emailGroup');
-			@let emailGroupErrors = emailGroup?.errors;
-
-			<div class="mb-3">
-				<label for="email">Email:</label>
-				<input type="email" class="form-control" placeholder="Email" formControlName="email" [validationClasses]="{
+		<div class="mb-3">
+			<label for="email">Email:</label>
+			<input type="email" class="form-control" placeholder="Email" formControlName="email" [validationClasses]="{
 				valid: 'is-valid', invalid: 'is-invalid'
 				}" />
 
-				@let emailErrors = emailGroup?.get('email')?.errors;
+			@let emailErrors = registerForm.get('email')?.errors;
 
-				@if(emailErrors?.['required']) {
-				<div class="invalid-feedback">Email cannot be empty</div>
-				}
+			@if(emailErrors?.['required']) {
+			<div class="invalid-feedback">Email cannot be empty</div>
+			}
 
-				@if(emailErrors?.['email']) {
-				<div class="invalid-feedback">Email is invalid</div>
-				}
-			</div>
+			@if(emailErrors?.['email']) {
+			<div class="invalid-feedback">Email is invalid</div>
+			}
+		</div>
 
-			<div class="mb-3">
-				<label for="email2">Confirm Email:</label>
-				<input type="email" class="form-control" placeholder="Email" formControlName="emailConfirm" [validationClasses]="{
+		<div class="mb-3">
+			<label for="email2">Confirm Email:</label>
+			<input type="email" class="form-control" placeholder="Email" formControlName="emailConfirm" [validationClasses]="{
 				valid: 'is-valid', invalid: 'is-invalid'
 				}" />
 
-				<!-- TODO NO ME ENTERO COMO SE HACE -->
+			@let emailConfirmErrors = registerForm.get('emailConfirm')?.errors;
 
-				@let emailConfirmErrors = emailGroup?.get('emailConfirm')?.errors;
+			@if (emailConfirmErrors?.['required']) {
+			<div class="invalid-feedback">Confirm email cannot be empty</div>
+			}@else if(emailConfirmErrors?.['email'] || emailConfirmErrors?.['emailMismatch']) {
+			<div class="invalid-feedback">Emails do not match</div>
+			}
 
-				@if (emailConfirmErrors?.['required']) {
-				<div class="invalid-feedback">Confirm email cannot be empty</div>
-				}
-
-				@if(emailErrors?.['email']) {
-				<div class="invalid-feedback">Email is invalid</div>
-				}
-
-				@if (emailGroupErrors?.['match']) {
-				<div class="invalid-feedback">Emails do not match</div>
-				}
-
-				<div>Dirty: {{emailGroup?.get('emailConfirm')?.dirty}}</div>
-				<div>Valid: {{emailGroup?.get('emailConfirm')?.valid}}</div>
-				<div>Value: {{emailGroup?.get('emailConfirm')?.value}}</div>
-				<div>Errors group: {{ emailGroupErrors | json}}</div>
-				<div>Errors: {{ emailConfirmErrors | json}}</div>
-			</div>
+			<div>Dirty: {{registerForm.get('emailConfirm')?.dirty}}</div>
+			<div>Valid: {{registerForm.get('emailConfirm')?.valid}}</div>
+			<div>Value: {{registerForm.get('emailConfirm')?.value}}</div>
+			<div>Errors: {{ emailConfirmErrors | json}}</div>
 		</div>
 
 		<div class="mb-3">
