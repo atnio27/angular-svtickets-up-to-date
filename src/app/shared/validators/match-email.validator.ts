@@ -8,6 +8,5 @@ export function matchEmailValidator(
   const formGroup = c as FormGroup;
   const email = formGroup.controls['email'].value;
   const email2 = formGroup.controls['emailConfirm'].value;
-  console.log(email === email2 ? null : { match: true });
   return email === email2 ? null : { match: true };
 }
