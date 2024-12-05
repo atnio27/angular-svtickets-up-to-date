@@ -1,11 +1,8 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import {
-  AbstractControl,
   FormsModule,
   NonNullableFormBuilder,
   ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -95,14 +92,5 @@ export class EventFormComponent implements CanComponentDeactivate {
       this.eventForm.pristine ||
       confirm('Do you want to leave the page? Changes will be lost...')
     );
-  }
-
-  minDateValidator(minDate: string): ValidatorFn {
-    return (c: AbstractControl): ValidationErrors | null => {
-      if (c.value && minDate && minDate > c.value) {
-        return { minDate: true };
-      }
-      return null;
-    };
   }
 }
