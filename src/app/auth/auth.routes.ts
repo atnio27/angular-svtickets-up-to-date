@@ -11,6 +11,15 @@ export const eventRoutes: Routes = [
     title: 'Login | Angular Events',
   },
   {
+    path: 'register',
+    loadComponent: () =>
+      import('./register-page/register-page.component').then(
+        (m) => m.RegisterPageComponent
+      ),
+
+    title: 'Register | Angular Events',
+  },
+  {
     path: '',
     redirectTo: '/auth/login',
     pathMatch: 'full',
