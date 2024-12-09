@@ -6,7 +6,7 @@ import {
 } from '@angular/forms';
 import { ValidationClassesDirective } from '../../shared/directives/validation-classes.directive';
 import { matchEmailValidator } from '../../shared/validators/match-email.validator';
-import { GeolocationService } from '../services/geolocation.service';
+// import { GeolocationService } from '../services/geolocation.service';
 import { EncodeBase64Directive } from '../../shared/directives/encode-base64.directive';
 
 @Component({
@@ -54,12 +54,12 @@ export class RegisterPageComponent {
     }
 
     // geolocation
-    const latitude = this.registerForm.get('latitude');
-    const longitude = this.registerForm.get('longitude');
+    // const latitude = this.registerForm.get('latitude');
+    // const longitude = this.registerForm.get('longitude');
 
-    GeolocationService.getLocation().then((coords) => {
-      latitude?.setValue(coords.latitude.toString());
-      longitude?.setValue(coords.longitude.toString());
-    });
+    // GeolocationService.getLocation().then((coords) => {
+    //   latitude?.setValue(coords.latitude.toString());
+    //   longitude?.setValue(coords.longitude.toString());
+    // });
   }
 }
