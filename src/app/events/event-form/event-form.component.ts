@@ -42,7 +42,7 @@ export class EventFormComponent implements CanComponentDeactivate {
       ],
     ],
     description: ['', Validators.required],
-    price: [0, [Validators.required, Validators.min(0)]],
+    price: [0, [Validators.required, Validators.min(0.01)]],
     image: ['', Validators.required],
     date: ['', [Validators.required, minDateValidator(this.todayDate)]],
   });
