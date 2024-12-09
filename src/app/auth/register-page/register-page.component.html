@@ -15,55 +15,36 @@
 			}
 		</div>
 
-		<div formGroupName="emailGroup">
-			@let emailGroup = registerForm.get('emailGroup');
-			@let emailGroupErrors = emailGroup?.errors;
-
-			<div class="mb-3">
-				<label for="email">Email:</label>
-				<input type="email" class="form-control" placeholder="Email" formControlName="email" [validationClasses]="{
+		<div class="mb-3">
+			<label for="email">Email:</label>
+			<input type="email" class="form-control" placeholder="Email" formControlName="email" [validationClasses]="{
 				valid: 'is-valid', invalid: 'is-invalid'
 				}" />
 
-				@let emailErrors = emailGroup?.get('email')?.errors;
+			@let emailErrors = registerForm.get('email')?.errors;
 
-				@if(emailErrors?.['required']) {
-				<div class="invalid-feedback">Email cannot be empty</div>
-				}
+			@if(emailErrors?.['required']) {
+			<div class="invalid-feedback">Email cannot be empty</div>
+			}
 
-				@if(emailErrors?.['email']) {
-				<div class="invalid-feedback">Email is invalid</div>
-				}
-			</div>
+			@if(emailErrors?.['email']) {
+			<div class="invalid-feedback">Email is invalid</div>
+			}
+		</div>
 
-			<div class="mb-3">
-				<label for="email2">Confirm Email:</label>
-				<input type="email" class="form-control" placeholder="Email" formControlName="emailConfirm" [validationClasses]="{
+		<div class="mb-3">
+			<label for="email2">Confirm Email:</label>
+			<input type="email" class="form-control" placeholder="Email" formControlName="emailConfirm" [validationClasses]="{
 				valid: 'is-valid', invalid: 'is-invalid'
 				}" />
 
-				<!-- TODO NO ME ENTERO COMO SE HACE -->
+			@let emailConfirmErrors = registerForm.get('emailConfirm')?.errors;
 
-				@let emailConfirmErrors = emailGroup?.get('emailConfirm')?.errors;
-
-				@if (emailConfirmErrors?.['required']) {
-				<div class="invalid-feedback">Confirm email cannot be empty</div>
-				}
-
-				@if(emailErrors?.['email']) {
-				<div class="invalid-feedback">Email is invalid</div>
-				}
-
-				@if (emailGroupErrors?.['match']) {
-				<div class="invalid-feedback">Emails do not match</div>
-				}
-
-				<div>Dirty: {{emailGroup?.get('emailConfirm')?.dirty}}</div>
-				<div>Valid: {{emailGroup?.get('emailConfirm')?.valid}}</div>
-				<div>Value: {{emailGroup?.get('emailConfirm')?.value}}</div>
-				<div>Errors group: {{ emailGroupErrors | json}}</div>
-				<div>Errors: {{ emailConfirmErrors | json}}</div>
-			</div>
+			@if (emailConfirmErrors?.['required']) {
+			<div class="invalid-feedback">Confirm email cannot be empty</div>
+			}@else if(emailConfirmErrors?.['email'] || emailConfirmErrors?.['emailMismatch']) {
+			<div class="invalid-feedback">Emails do not match</div>
+			}
 		</div>
 
 		<div class="mb-3">
@@ -91,18 +72,35 @@
 		<div class="form-row">
 			<div class="mb-3 col">
 				<label for="lat">Latitude:</label>
-				<input type="text" class="form-control" id="lat" name="lat" placeholder="Geolocating..." readonly />
+				<input type="text" class="form-control" id="lat" name="lat" placeholder="Geolocating..." readonly
+					formControlName="latitude" />
 			</div>
 			<div class="mb-3 col">
 				<label for="lng">Longitude:</label>
-				<input type="text" class="form-control" id="lng" name="lng" placeholder="Geolocating..." readonly />
+				<input type="text" class="form-control" id="lng" name="lng" placeholder="Geolocating..." readonly
+					formControlName="longitude" />
 			</div>
 		</div>
-		<div class="mb-3">
+
+		<div class=" mb-3">
 			<label for="avatar">Avatar image</label>
-			<input type="file" class="form-control" id="photo" name="photo" />
+			<input type="file" class="form-control" formControlName="image" #fileInput encodeBase64
+				(encoded)="imageBase64 = $event" (change)="checkImage(fileInput)" [validationClasses]="{
+					valid: 'is-valid', invalid: 'is-invalid'
+					}" />
+
+			@let imageErrors = registerForm.get('image')?.errors;
+
+			@if(imageErrors?.['required']) {
+			<div class="invalid-feedback">Image cannot be empty</div>
+			}
+
 		</div>
-		<img src="" alt="" id="imgPreview" class="img-thumbnail d-none" />
+
+		@if (imageBase64){
+		<img [src]="imageBase64" alt="" id="imgPreview" class="img-thumbnail" />
+		}
+
 		<p class="text-danger" id="errorInfo"></p>
 		<a class="btn btn-secondary" href="login.html" role="button">Go back</a>
 		<button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Create account</button>
