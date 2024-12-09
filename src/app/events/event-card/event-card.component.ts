@@ -20,7 +20,6 @@ export class EventCardComponent {
   #router = inject(Router);
 
   event = input.required<MyEvent>();
-
   deleted = output<void>();
 
   deleteButton() {

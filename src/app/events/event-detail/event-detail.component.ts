@@ -12,10 +12,10 @@ import { MyEvent } from '../interfaces/my-event';
   styleUrl: './event-detail.component.css',
 })
 export class EventDetailComponent {
-  event = input.required<MyEvent>();
   #title = inject(Title);
-
   #router = inject(Router);
+
+  event = input.required<MyEvent>();
 
   constructor() {
     effect(() => {
@@ -23,13 +23,6 @@ export class EventDetailComponent {
         this.#title.setTitle(this.event().title + ' | Angular Events');
       }
     });
-    // effect(() => {
-    //   this.#eventsService
-    //   .getEvent(this.id).subscribe((event) => {
-    //     this.event.set(event);
-    //     this.#title.setTitle(this.event()?.description + ' | Angular Events');
-    //   });
-    // });
   }
 
   goBack() {
