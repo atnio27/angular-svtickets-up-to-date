@@ -8,44 +8,40 @@
 				valid: 'is-valid', invalid: 'is-invalid'
 				}" />
 
-			@let nameErrors = registerForm.get('name')?.errors;
-
-			@if(nameErrors?.['required']) {
 			<div class="invalid-feedback">Name cannot be empty</div>
-			}
+
 		</div>
 
-		<div class="mb-3">
-			<label for="email">Email:</label>
-			<input type="email" class="form-control" placeholder="Email" formControlName="email" [validationClasses]="{
+		<form [formGroup]="emailGroupForm">
+			<div class="mb-3">
+				<label for="email">Email:</label>
+				<input type="email" class="form-control" placeholder="Email" formControlName="email" [validationClasses]="{
 				valid: 'is-valid', invalid: 'is-invalid'
 				}" />
 
-			@let emailErrors = registerForm.get('email')?.errors;
+				@let emailErrors = emailGroupForm.get('email')?.errors;
 
-			@if(emailErrors?.['required']) {
-			<div class="invalid-feedback">Email cannot be empty</div>
-			}
+				@if(emailErrors?.['required']) {
+				<div class="invalid-feedback">Email cannot be empty</div>
+				}
 
-			@if(emailErrors?.['email']) {
-			<div class="invalid-feedback">Email is invalid</div>
-			}
-		</div>
+				@if(emailErrors?.['email']) {
+				<div class="invalid-feedback">Email is invalid</div>
+				}
+			</div>
 
-		<div class="mb-3">
-			<label for="email2">Confirm Email:</label>
-			<input type="email" class="form-control" placeholder="Email" formControlName="emailConfirm" [validationClasses]="{
-				valid: 'is-valid', invalid: 'is-invalid'
+			<div class="mb-3">
+				@let emailConfirmModel = emailGroupForm.get('repeatEmail')!;
+
+				<label for="email2">Confirm Email:</label>
+				<input type="email" class="form-control" placeholder="Email" formControlName="repeatEmail" [class]="{
+					'is-valid': emailConfirmModel.touched && !emailGroupForm.errors?.['equalValues'],
+					'is-invalid': emailConfirmModel.touched && emailGroupForm.errors?.['equalValues']
 				}" />
 
-			@let emailConfirmErrors = registerForm.get('emailConfirm')?.errors;
-
-			@if (emailConfirmErrors?.['required']) {
-			<div class="invalid-feedback">Confirm email cannot be empty</div>
-			}@else if(emailConfirmErrors?.['email'] || emailConfirmErrors?.['emailMismatch']) {
-			<div class="invalid-feedback">Emails do not match</div>
-			}
-		</div>
+				<div class="invalid-feedback">Emails do not match</div>
+			</div>
+		</form>
 
 		<div class="mb-3">
 			<label for="password">Password:</label>
@@ -89,11 +85,7 @@
 					valid: 'is-valid', invalid: 'is-invalid'
 					}" />
 
-			@let imageErrors = registerForm.get('image')?.errors;
-
-			@if(imageErrors?.['required']) {
 			<div class="invalid-feedback">Image cannot be empty</div>
-			}
 
 		</div>
 
@@ -102,7 +94,7 @@
 		}
 
 		<p class="text-danger" id="errorInfo"></p>
-		<a class="btn btn-secondary" href="login.html" role="button">Go back</a>
+		<a class="btn btn-secondary" href="login.html">Go back</a>
 		<button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Create account</button>
 	</form>
 </div>
