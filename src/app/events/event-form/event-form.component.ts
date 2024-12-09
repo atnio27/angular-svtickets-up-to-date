@@ -11,7 +11,7 @@ import { EncodeBase64Directive } from '../../shared/directives/encode-base64.dir
 import { EventsService } from '../services/events.service';
 import { ValidationClassesDirective } from '../../shared/directives/validation-classes.directive';
 import { DatePipe } from '@angular/common';
-import { MyEvent } from '../../shared/interfaces/my-event';
+import { MyEvent } from '../interfaces/my-event';
 import { CanComponentDeactivate } from '../../shared/guards/leave-page-guard.guard';
 import { minDateValidator } from '../../shared/validators/min-date.validator';
 

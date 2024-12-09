@@ -32,4 +32,8 @@ export const eventRoutes: Routes = [
         (m) => m.EventDetailComponent
       ),
   },
+  {
+    path: '**',
+    redirectTo: '/events',
+  },
 ];

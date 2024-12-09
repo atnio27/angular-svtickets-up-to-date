@@ -19,13 +19,4 @@ export const eventRoutes: Routes = [
 
     title: 'Register | Angular Events',
   },
-  {
-    path: '',
-    redirectTo: '/auth/login',
-    pathMatch: 'full',
-  },
-  {
-    path: '**',
-    redirectTo: '/auth/login',
-  },
 ];

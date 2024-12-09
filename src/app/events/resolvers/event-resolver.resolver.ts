@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { ResolveFn, Router } from '@angular/router';
 import { EventsService } from '../services/events.service';
 import { catchError, EMPTY } from 'rxjs';
-import { MyEvent } from '../../shared/interfaces/my-event';
+import { MyEvent } from '../interfaces/my-event';
 
 export const eventResolverResolver: ResolveFn<MyEvent> = (route) => {
   const eventServie = inject(EventsService);

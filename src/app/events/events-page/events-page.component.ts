@@ -1,5 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { MyEvent } from '../../shared/interfaces/my-event';
+import { MyEvent } from '../interfaces/my-event';
 import { FormsModule } from '@angular/forms';
 import { EventCardComponent } from '../event-card/event-card.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

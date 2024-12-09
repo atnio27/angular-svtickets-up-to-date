@@ -4,7 +4,7 @@ import { DatePipe } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
 import { IntlCurrencyPipe } from '../../shared/pipes/intl-currency.pipe.spec';
-import { MyEvent } from '../../shared/interfaces/my-event';
+import { MyEvent } from '../interfaces/my-event';
 import { EventsService } from '../services/events.service';
 
 @Component({

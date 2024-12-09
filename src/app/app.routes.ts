@@ -12,11 +12,11 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/events',
+    redirectTo: '/auth/login',
     pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: '/events',
+    redirectTo: '/auth/login',
   },
 ];

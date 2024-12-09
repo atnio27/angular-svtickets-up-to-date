@@ -2,7 +2,7 @@ import { Component, effect, inject, input } from '@angular/core';
 import { EventCardComponent } from '../event-card/event-card.component';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { MyEvent } from '../../shared/interfaces/my-event';
+import { MyEvent } from '../interfaces/my-event';
 
 @Component({
   selector: 'event-detail',
