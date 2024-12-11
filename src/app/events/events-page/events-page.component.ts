@@ -21,7 +21,8 @@ export class EventsPageComponent {
       .pipe(takeUntilDestroyed())
       .subscribe({
         next: (events) => {
-          this.events.set(events);
+          console.log(events);
+          this.events.set(events.events);
         },
         error: (error) => {
           console.error(error);
