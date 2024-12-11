@@ -9,10 +9,9 @@
 				}" />
 
 			<div class="invalid-feedback">Name cannot be empty</div>
-
 		</div>
 
-		<form [formGroup]="emailGroupForm">
+		<ng-container [formGroup]="emailGroupForm">
 			<div class="mb-3">
 				<label for="email">Email:</label>
 				<input type="email" class="form-control" placeholder="Email" formControlName="email" [validationClasses]="{
@@ -41,7 +40,7 @@
 
 				<div class="invalid-feedback">Emails do not match</div>
 			</div>
-		</form>
+		</ng-container>
 
 		<div class="mb-3">
 			<label for="password">Password:</label>
