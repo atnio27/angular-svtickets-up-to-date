@@ -89,6 +89,10 @@
 		@if (imageBase64) {
 		<img [src]="imageBase64" alt="" id="imgPreview" class="img-thumbnail mb-3">
 		}
+
+		<div id="autocomplete" class="autocomplete-container"></div>
+		<div id="map" class="mb-3"></div>
+
 		<div>
 
 			<button type="submit" class="btn btn-primary" [disabled]="eventForm.invalid">Create</button>
