@@ -11,7 +11,7 @@ import { EncodeBase64Directive } from '../../shared/directives/encode-base64.dir
 import { EventsService } from '../services/events.service';
 import { ValidationClassesDirective } from '../../shared/directives/validation-classes.directive';
 import { DatePipe } from '@angular/common';
-import { MyEvent } from '../interfaces/my-event';
+import { MyEventInsert } from '../interfaces/my-event';
 import { CanComponentDeactivate } from '../../shared/guards/leave-page-guard.guard';
 import { minDateValidator } from '../../shared/validators/min-date.validator';
 
@@ -43,6 +43,9 @@ export class EventFormComponent implements CanComponentDeactivate {
     ],
     description: ['', Validators.required],
     price: [0, [Validators.required, Validators.min(0.01)]],
+    lat: 0,
+    lng: 0,
+    address: 'bomboclat',
     image: ['', Validators.required],
     date: ['', [Validators.required, minDateValidator(this.todayDate)]],
   });
@@ -65,7 +68,7 @@ export class EventFormComponent implements CanComponentDeactivate {
   // };
 
   addEvent() {
-    const event: MyEvent = {
+    const event: MyEventInsert = {
       ...this.eventForm.getRawValue(),
       image: this.imageBase64,
     };
