@@ -28,10 +28,13 @@ export class LoadGoogleApiService {
 
   async setGoogleBtn(btn: HTMLElement) {
     await this.#loader; // Espera a que se haya terminado de cargar (si no lo ha hecho ya)
-    google.accounts.id.renderButton(
-      btn,
-      { theme: 'filled_blue', size: 'large', type: 'standard' } // Diseño del botón
-    );
+    google.accounts.id.renderButton(btn, {
+      type: 'standard',
+      theme: 'outline',
+      size: 'large',
+      text: 'continue_with',
+      shape: 'rectangular',
+    });
   }
 
   async #loadApi(): Promise<void> {
