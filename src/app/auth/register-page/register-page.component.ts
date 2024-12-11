@@ -5,7 +5,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ValidationClassesDirective } from '../../shared/directives/validation-classes.directive';
-// import { GeolocationService } from '../services/geolocation.service';
+import { GeolocationService } from '../services/geolocation.service';
 import { EncodeBase64Directive } from '../../shared/directives/encode-base64.directive';
 import { equalValues } from '../../shared/validators/equal-values.validator';
 
@@ -26,8 +26,8 @@ export class RegisterPageComponent {
   registerForm = this.#fb.group({
     name: ['', Validators.required],
     password: ['', [Validators.required, Validators.minLength(4)]],
-    latitude: ['0'],
-    longitude: ['0'],
+    latitude: [0],
+    longitude: [0],
     image: ['', [Validators.required]],
   });
 
@@ -49,11 +49,18 @@ export class RegisterPageComponent {
 
   constructor() {
     // geolocation
-    // const latitude = this.registerForm.get('latitude');
-    // const longitude = this.registerForm.get('longitude');
-    // GeolocationService.getLocation().then((coords) => {
-    //   latitude?.setValue(coords.latitude.toString());
-    //   longitude?.setValue(coords.longitude.toString());
-    // });
+    const latitude = this.registerForm.get('latitude');
+    const longitude = this.registerForm.get('longitude');
+
+    GeolocationService.getLocation()
+      .then((coords) => {
+        latitude?.setValue(coords.latitude);
+        longitude?.setValue(coords.longitude);
+      })
+      .catch((err) => {
+        console.log(err);
+        latitude?.setValue(0);
+        longitude?.setValue(0);
+      });
   }
 }
