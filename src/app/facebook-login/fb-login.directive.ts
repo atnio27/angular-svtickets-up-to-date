@@ -1,5 +1,6 @@
-import { Directive, inject, input, output } from '@angular/core';
+import { Directive, inject, input, output, PLATFORM_ID } from '@angular/core';
 import { LoadFbApiService } from './load-fb-api.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Directive({
   selector: '[fbLogin]',
@@ -13,14 +14,16 @@ export class FbLoginDirective {
   loginError = output<string>();
   scopes = input.required<string[]>();
 
-  #loadService = inject(LoadFbApiService);
+  platformId = inject(PLATFORM_ID);
+  #loadService = isPlatformBrowser(this.platformId)
+    ? inject(LoadFbApiService)
+    : null;
 
   async onClick(): Promise<void> {
     try {
-      const resp = await this.#loadService.login(this.scopes().join(','));
+      const resp = await this.#loadService!.login(this.scopes().join(','));
       this.loginOk.emit(resp);
-    } catch (e) {
-      console.log(e);
+    } catch {
       this.loginError.emit('Error with Facebook login!');
     }
   }
