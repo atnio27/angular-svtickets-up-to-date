@@ -5,12 +5,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { ValidationClassesDirective } from '../../shared/directives/validation-classes.directive';
-import { GoogleLoginDirective } from '../../google-login/google-login.directive';
-import { LoadGoogleApiService } from '../../google-login/load-google-api.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FbLoginDirective } from '../../facebook-login/fb-login.directive';
-// import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-// import { faFacebook } from '@fortawesome/free-brands-svg-icons';
+import { GoogleLoginDirective } from '../../google-login/google-login.directive';
+import { AuthService } from '../services/auth.service';
+import { UserLogin } from '../interfaces/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login-page',
@@ -18,27 +17,40 @@ import { FbLoginDirective } from '../../facebook-login/fb-login.directive';
   imports: [
     ReactiveFormsModule,
     ValidationClassesDirective,
-    GoogleLoginDirective,
     FbLoginDirective,
-    // FaIconComponent,
+    GoogleLoginDirective,
   ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
 })
 export class LoginPageComponent {
   #fb = inject(NonNullableFormBuilder);
-
-  #loadGoogle = inject(LoadGoogleApiService);
+  #authService = inject(AuthService);
+  #router = inject(Router);
 
   loginForm = this.#fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
   });
 
-  constructor() {
-    this.#loadGoogle.credential$.pipe(takeUntilDestroyed()).subscribe(
-      (resp) => console.log(resp.credential) // Envia esto tu API
-    );
+  login() {
+    const user: UserLogin = {
+      ...this.loginForm.getRawValue(),
+      lat: 0,
+      lng: 0,
+    };
+    // Tengo que poner el destroy ref y take until destroyed aqui????? TO DO
+    this.#authService
+      .login(user)
+      .pipe()
+      .subscribe(() => {
+        this.#router.navigate(['/events']);
+      });
+  }
+
+  loggedGoogle(resp: google.accounts.id.CredentialResponse) {
+    // Envia esto tu API
+    console.log(resp.credential);
   }
 
   loggedFacebook(resp: fb.StatusResponse) {
