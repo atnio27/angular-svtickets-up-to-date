@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { Subject, fromEvent, firstValueFrom } from 'rxjs';
+import { Subject, firstValueFrom, fromEvent } from 'rxjs';
 import { CLIENT_ID } from './google-login.config';
-import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +9,6 @@ export class LoadGoogleApiService {
   #loader: Promise<void>;
   #credential$ = new Subject<google.accounts.id.CredentialResponse>();
   #clientId = inject(CLIENT_ID, { optional: true });
-  document = inject(DOCUMENT);
 
   constructor() {
     if (this.#clientId === null) {
@@ -28,20 +26,17 @@ export class LoadGoogleApiService {
 
   async setGoogleBtn(btn: HTMLElement) {
     await this.#loader; // Espera a que se haya terminado de cargar (si no lo ha hecho ya)
-    google.accounts.id.renderButton(btn, {
-      type: 'standard',
-      theme: 'outline',
-      size: 'large',
-      text: 'continue_with',
-      shape: 'rectangular',
-    });
+    google.accounts.id.renderButton(
+      btn,
+      { theme: 'outline', size: 'large', type: 'standard' } // Diseño del botón
+    );
   }
 
   async #loadApi(): Promise<void> {
-    const script = this.document.createElement('script');
+    const script = document.createElement('script');
     script.src = 'https://accounts.google.com/gsi/client';
     script.async = true;
-    this.document.body.appendChild(script);
+    document.body.appendChild(script);
 
     await firstValueFrom(fromEvent(script, 'load'));
 
