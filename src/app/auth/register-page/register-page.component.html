@@ -1,99 +1,99 @@
 <div class="container">
-	<form [formGroup]="registerForm" class="mt-4">
-		<legend>Create an account</legend>
+  <form [formGroup]="registerForm" class="mt-4">
+    <legend>Create an account</legend>
 
-		<div class="mb-3">
-			<label for="name">Name:</label>
-			<input type="text" class="form-control" placeholder="Name" formControlName="name" [validationClasses]="{
+    <div class="mb-3">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" placeholder="Name" formControlName="name" [validationClasses]="{
 				valid: 'is-valid', invalid: 'is-invalid'
 				}" />
 
-			<div class="invalid-feedback">Name cannot be empty</div>
-		</div>
+      <div class="invalid-feedback">Name cannot be empty</div>
+    </div>
 
-		<ng-container [formGroup]="emailGroupForm">
-			<div class="mb-3">
-				<label for="email">Email:</label>
-				<input type="email" class="form-control" placeholder="Email" formControlName="email" [validationClasses]="{
+    <ng-container [formGroup]="emailGroupForm">
+      <div class="mb-3">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" placeholder="Email" formControlName="email" [validationClasses]="{
 				valid: 'is-valid', invalid: 'is-invalid'
 				}" />
 
-				@let emailErrors = emailGroupForm.get('email')?.errors;
+        @let emailErrors = emailGroupForm.get('email')?.errors;
 
-				@if(emailErrors?.['required']) {
-				<div class="invalid-feedback">Email cannot be empty</div>
-				}
+        @if(emailErrors?.['required']) {
+        <div class="invalid-feedback">Email cannot be empty</div>
+        }
 
-				@if(emailErrors?.['email']) {
-				<div class="invalid-feedback">Email is invalid</div>
-				}
-			</div>
+        @if(emailErrors?.['email']) {
+        <div class="invalid-feedback">Email is invalid</div>
+        }
+      </div>
 
-			<div class="mb-3">
-				@let emailConfirmModel = emailGroupForm.get('repeatEmail')!;
+      <div class="mb-3">
+        @let emailConfirmModel = emailGroupForm.get('repeatEmail')!;
 
-				<label for="email2">Confirm Email:</label>
-				<input type="email" class="form-control" placeholder="Email" formControlName="repeatEmail" [class]="{
+        <label for="email2">Confirm Email:</label>
+        <input type="email" class="form-control" placeholder="Email" formControlName="repeatEmail" [class]="{
 					'is-valid': emailConfirmModel.touched && !emailGroupForm.errors?.['equalValues'],
 					'is-invalid': emailConfirmModel.touched && emailGroupForm.errors?.['equalValues']
 				}" />
 
-				<div class="invalid-feedback">Emails do not match</div>
-			</div>
-		</ng-container>
+        <div class="invalid-feedback">Emails do not match</div>
+      </div>
+    </ng-container>
 
-		<div class="mb-3">
-			<label for="password">Password:</label>
-			<input type="password" class="form-control" formControlName="password" placeholder=" Password"
-				[validationClasses]="{
+    <div class="mb-3">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" formControlName="password" placeholder=" Password"
+        [validationClasses]="{
 				valid: 'is-valid', invalid: 'is-invalid'
 				}" />
 
-			@let passwordErrors = registerForm.get('password')?.errors;
+      @let passwordErrors = registerForm.get('password')?.errors;
 
-			@if(passwordErrors?.['required']) {
-			<div class="invalid-feedback">Password cannot be empty</div>
-			}
+      @if(passwordErrors?.['required']) {
+      <div class="invalid-feedback">Password cannot be empty</div>
+      }
 
-			@if(passwordErrors?.['minlength']) {
-			<div class="invalid-feedback">
-				You must enter at least
-				{{passwordErrors?.['minlength'].requiredLength - passwordErrors?.['minlength'].actualLength}}
-				characters more
-			</div>
-			}
-		</div>
+      @if(passwordErrors?.['minlength']) {
+      <div class="invalid-feedback">
+        You must enter at least
+        {{passwordErrors?.['minlength'].requiredLength - passwordErrors?.['minlength'].actualLength}}
+        characters more
+      </div>
+      }
+    </div>
 
-		<div class="form-row">
-			<div class="mb-3 col">
-				<label for="lat">Latitude:</label>
-				<input type="text" class="form-control" id="lat" name="lat" placeholder="Geolocating..." readonly
-					formControlName="latitude" />
-			</div>
-			<div class="mb-3 col">
-				<label for="lng">Longitude:</label>
-				<input type="text" class="form-control" id="lng" name="lng" placeholder="Geolocating..." readonly
-					formControlName="longitude" />
-			</div>
-		</div>
+    <div class="form-row">
+      <div class="mb-3 col">
+        <label for="lat">Latitude:</label>
+        <input type="text" class="form-control" id="lat" name="lat" placeholder="Geolocating..." readonly
+          formControlName="lat" />
+      </div>
+      <div class="mb-3 col">
+        <label for="lng">Longitude:</label>
+        <input type="text" class="form-control" id="lng" name="lng" placeholder="Geolocating..." readonly
+          formControlName="lng" />
+      </div>
+    </div>
 
-		<div class=" mb-3">
-			<label for="avatar">Avatar image</label>
-			<input type="file" class="form-control" formControlName="image" #fileInput encodeBase64
-				(encoded)="imageBase64 = $event" (change)="checkImage(fileInput)" [validationClasses]="{
+    <div class=" mb-3">
+      <label for="avatar">Avatar image</label>
+      <input type="file" class="form-control" formControlName="image" #fileInput encodeBase64
+        (encoded)="imageBase64 = $event" (change)="checkImage(fileInput)" [validationClasses]="{
 					valid: 'is-valid', invalid: 'is-invalid'
 					}" />
 
-			<div class="invalid-feedback">Image cannot be empty</div>
+      <div class="invalid-feedback">Image cannot be empty</div>
 
-		</div>
+    </div>
 
-		@if (imageBase64){
-		<img [src]="imageBase64" alt="" id="imgPreview" class="img-thumbnail" />
-		}
+    @if (imageBase64){
+    <img [src]="imageBase64" alt="" id="imgPreview" class="img-thumbnail" />
+    }
 
-		<p class="text-danger" id="errorInfo"></p>
-		<a class="btn btn-secondary" href="login.html">Go back</a>
-		<button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Create account</button>
-	</form>
+    <p class="text-danger" id="errorInfo"></p>
+    <a class="btn btn-secondary" href="login.html">Go back</a>
+    <button (click)="register()" class="btn btn-primary" [disabled]="registerForm.invalid">Create account</button>
+  </form>
 </div>
