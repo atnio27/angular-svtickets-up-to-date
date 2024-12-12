@@ -1,55 +1,53 @@
 <div class="container">
-	<form class="mt-4" [formGroup]="loginForm">
-		<legend>Welcome to SVTickets!</legend>
+  <form class="mt-4" [formGroup]="loginForm">
+    <legend>Welcome to SVTickets!</legend>
 
-		<div class="mb-3">
-			<label for="email">Email:</label>
-			<input type="email" class="form-control" name="email" id="email" placeholder="Email" required
-				formControlName="email" [validationClasses]="{
+    <div class="mb-3">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" name="email" id="email" placeholder="Email" required
+        formControlName="email" [validationClasses]="{
 					valid: 'is-valid', invalid: 'is-invalid'
 					}" />
 
-			@let emailErrors = loginForm.get('email')?.errors;
+      @let emailErrors = loginForm.get('email')?.errors;
 
-			@if(emailErrors?.['required']) {
-			<div class="invalid-feedback">Email is required</div>
-			}
+      @if(emailErrors?.['required']) {
+      <div class="invalid-feedback">Email is required</div>
+      }
 
-			@if(emailErrors?.['email']) {
-			<div class="invalid-feedback">Email is invalid</div>
-			}
-		</div>
+      @if(emailErrors?.['email']) {
+      <div class="invalid-feedback">Email is invalid</div>
+      }
+    </div>
 
-		<div class="mb-3">
-			<label for="password">Password:</label>
-			<input type="password" class="form-control" name="password" id="password" placeholder="Password" required
-				formControlName="password" [validationClasses]="{
+    <div class="mb-3">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" name="password" id="password" placeholder="Password" required
+        formControlName="password" [validationClasses]="{
 					valid: 'is-valid', invalid: 'is-invalid'
 					}" />
 
-			@let passwordErrors = loginForm.get('password')?.errors;
+      @let passwordErrors = loginForm.get('password')?.errors;
 
-			@if(passwordErrors?.['required']) {
-			<div class="invalid-feedback">Password is required</div>
-			}
-		</div>
+      @if(passwordErrors?.['required']) {
+      <div class="invalid-feedback">Password is required</div>
+      }
+    </div>
 
-		<p class="text-danger" id="errorInfo"></p>
+    <p class="text-danger" id="errorInfo"></p>
 
-		<a class="btn btn-secondary" href="/events" role="button">Create account</a>
+    <a class="btn btn-secondary" href="/events" role="button">Create account</a>
 
-		<a href="/events"><button type="button" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button></a>
+    <button type="button" (click)="login()" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
 
-		<br>
-		<br>
+    <div>
+      <google-login class="btn btn-google" (login)="loggedGoogle($event)"></google-login>
+    </div>
 
+    <button fbLogin [scopes]="['email', 'public_profile']" class="btn btn-primary" (loginOk)="loggedFacebook($event)"
+      (loginError)="showError($event)">
+      Login con Facebook
+    </button>
 
-		<div googleLogin class="btn btn-google"></div>
-		@defer () {
-		<button fbLogin [scopes]="['email', 'public_profile']" class="btn btn-primary ms-3"
-			(loginOk)="loggedFacebook($event)" (loginError)="showError($event)">
-			Login con Facebook
-		</button>
-		}
-	</form>
+  </form>
 </div>
