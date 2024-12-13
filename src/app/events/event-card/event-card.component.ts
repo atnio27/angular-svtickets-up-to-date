@@ -8,11 +8,10 @@ import { MyEvent } from '../interfaces/my-event';
 import { EventsService } from '../services/events.service';
 
 @Component({
-  selector: 'event-card',
-  standalone: true,
-  imports: [DatePipe, IntlCurrencyPipe, RouterLink],
-  templateUrl: './event-card.component.html',
-  styleUrl: './event-card.component.css',
+    selector: 'event-card',
+    imports: [DatePipe, IntlCurrencyPipe, RouterLink],
+    templateUrl: './event-card.component.html',
+    styleUrl: './event-card.component.css'
 })
 export class EventCardComponent {
   #eventsService = inject(EventsService);

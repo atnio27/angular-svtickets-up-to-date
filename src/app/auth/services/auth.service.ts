@@ -19,6 +19,7 @@ export class AuthService {
   }
 
   login(user: UserLogin): Observable<void> {
+    const cookieService = inject(SsrCookieService);
     const loginUrl = `${this.#authUrl}/login/`;
 
     return this.#http.post<TokenResponse>(loginUrl, user).pipe(

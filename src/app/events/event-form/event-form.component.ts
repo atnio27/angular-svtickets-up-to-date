@@ -16,17 +16,16 @@ import { CanComponentDeactivate } from '../../shared/guards/leave-page-guard.gua
 import { minDateValidator } from '../../shared/validators/min-date.validator';
 
 @Component({
-  selector: 'event-form',
-  standalone: true,
-  imports: [
-    FormsModule,
-    EncodeBase64Directive,
-    ValidationClassesDirective,
-    DatePipe,
-    ReactiveFormsModule,
-  ],
-  templateUrl: './event-form.component.html',
-  styleUrl: './event-form.component.css',
+    selector: 'event-form',
+    imports: [
+        FormsModule,
+        EncodeBase64Directive,
+        ValidationClassesDirective,
+        DatePipe,
+        ReactiveFormsModule,
+    ],
+    templateUrl: './event-form.component.html',
+    styleUrl: './event-form.component.css'
 })
 export class EventFormComponent implements CanComponentDeactivate {
   #fb = inject(NonNullableFormBuilder);

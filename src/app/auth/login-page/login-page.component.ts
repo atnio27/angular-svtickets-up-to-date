@@ -12,16 +12,15 @@ import { UserLogin } from '../interfaces/user';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'login-page',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    ValidationClassesDirective,
-    FbLoginDirective,
-    GoogleLoginDirective,
-  ],
-  templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.css',
+    selector: 'login-page',
+    imports: [
+        ReactiveFormsModule,
+        ValidationClassesDirective,
+        FbLoginDirective,
+        GoogleLoginDirective,
+    ],
+    templateUrl: './login-page.component.html',
+    styleUrl: './login-page.component.css'
 })
 export class LoginPageComponent {
   #fb = inject(NonNullableFormBuilder);

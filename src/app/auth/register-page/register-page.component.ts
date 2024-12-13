@@ -13,15 +13,14 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'register-page',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    ValidationClassesDirective,
-    EncodeBase64Directive,
-  ],
-  templateUrl: './register-page.component.html',
-  styleUrl: './register-page.component.css',
+    selector: 'register-page',
+    imports: [
+        ReactiveFormsModule,
+        ValidationClassesDirective,
+        EncodeBase64Directive,
+    ],
+    templateUrl: './register-page.component.html',
+    styleUrl: './register-page.component.css'
 })
 export class RegisterPageComponent {
   #fb = inject(NonNullableFormBuilder);
