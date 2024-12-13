@@ -50,7 +50,7 @@ export class LoginPageComponent {
 
   loggedGoogle(resp: google.accounts.id.CredentialResponse) {
     // Envia esto tu API
-    console.log(resp.credential);
+    console.log(resp);
   }
 
   loggedFacebook(resp: fb.StatusResponse) {

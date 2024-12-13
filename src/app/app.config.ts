@@ -14,7 +14,11 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
 import { baseUrlInterceptor } from './shared/interceptors/base-url.interceptor';
 import { provideGoogleId } from './google-login/google-login.config';
 import { provideFacebookId } from './facebook-login/fb-login.config';
@@ -29,7 +33,10 @@ export const appConfig: ApplicationConfig = {
       withPreloading(PreloadAllModules)
     ),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withInterceptors([baseUrlInterceptor, authInterceptor])),
+    provideHttpClient(
+      withInterceptors([baseUrlInterceptor, authInterceptor]),
+      withFetch()
+    ),
     provideGoogleId(
       '746820501392-oalflicqch2kuc12s8rclb5rf7b1fist.apps.googleusercontent.com'
     ),
