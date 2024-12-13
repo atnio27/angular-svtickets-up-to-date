@@ -1,7 +1,11 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { SsrCookieService } from 'ngx-cookie-service-ssr';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const token = localStorage.getItem('token');
+  const cookieService = inject(SsrCookieService);
+
+  const token = cookieService.get('token');
 
   if (token) {
     // Estamos autenticados
