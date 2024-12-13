@@ -6,10 +6,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EventsService } from '../services/events.service';
 
 @Component({
-    selector: 'events-page',
-    imports: [FormsModule, EventCardComponent],
-    templateUrl: './events-page.component.html',
-    styleUrl: './events-page.component.css'
+  selector: 'events-page',
+  imports: [FormsModule, EventCardComponent],
+  templateUrl: './events-page.component.html',
+  styleUrl: './events-page.component.css',
 })
 export class EventsPageComponent {
   #eventsService = inject(EventsService);
@@ -20,7 +20,6 @@ export class EventsPageComponent {
       .pipe(takeUntilDestroyed())
       .subscribe({
         next: (events) => {
-          console.log(events);
           this.events.set(events.events);
         },
         error: (error) => {
