@@ -11,13 +11,13 @@ import { SsrCookieService } from 'ngx-cookie-service-ssr';
 })
 export class AuthService {
   #authUrl = 'auth';
-  #logged: WritableSignal<boolean> = signal(false);
 
   #http = inject(HttpClient);
   cookieService = inject(SsrCookieService);
+  #logged: WritableSignal<boolean> = signal(false);
 
-  getLogged() {
-    return this.#logged();
+  get logged() {
+    return this.#logged.asReadonly();
   }
 
   login(user: UserLogin): Observable<void> {
@@ -36,6 +36,7 @@ export class AuthService {
 
     return this.#http.post<TokenResponse>(loginUrl, googleLogin).pipe(
       map((resp) => {
+        console.log(resp.accessToken);
         this.cookieService.set('token', resp.accessToken);
         this.#logged.set(true);
       })
@@ -57,25 +58,49 @@ export class AuthService {
     this.#logged.set(false);
   }
 
-  isLogged(): Observable<boolean> {
-    if (this.getLogged() === false && this.cookieService.check('token')) {
+  isNotLoggedAndDoesNotHaveToken(): boolean {
+    return (
+      this.logged() === false && this.cookieService.check('token') === false
+    );
+  }
+
+  isLogged() {
+    const token = this.cookieService.get('token');
+
+    if (token) {
+      const validateUrl = `${this.#authUrl}/validate/`;
+      return this.#http.get(validateUrl).pipe(
+        map(() => {
+          this.#logged.set(true);
+          return true;
+        }),
+        catchError((error) => {
+          console.log(error);
+          this.cookieService.delete('token');
+          this.#logged.set(false);
+          return of(false);
+        })
+      );
+
+      // if (this.logged().valueOf() === true) {
+      //   // User is already logged in
+      //   return of(true);
+      // }
+
+      // if (this.cookieService.check('token') === false) {
+      //   // No token present
+      //   return of(false);
+      // }
+
+      // // Token exists, validate it
+    } else {
+      if (this.logged().valueOf() === true) {
+        // User is already logged in
+        return of(true);
+      }
+
+      this.#logged.set(false);
       return of(false);
     }
-
-    if (this.getLogged()) return of(true);
-
-    const validateUrl = `${this.#authUrl}/validate/`;
-
-    return this.#http.get<Observable<boolean>>(validateUrl).pipe(
-      map(() => {
-        console.log();
-        this.#logged.set(true);
-        return true;
-      }),
-      catchError(() => {
-        this.cookieService.delete('token');
-        return of(false);
-      })
-    );
   }
 }
