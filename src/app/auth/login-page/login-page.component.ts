@@ -5,11 +5,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { ValidationClassesDirective } from '../../shared/directives/validation-classes.directive';
-import { FbLoginDirective } from '../../facebook-login/fb-login.directive';
+// import { FbLoginDirective } from '../../facebook-login/fb-login.directive';
 import { GoogleLoginDirective } from '../../google-login/google-login.directive';
 import { AuthService } from '../services/auth.service';
 import { GoogleLogin, UserLogin } from '../interfaces/user';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { GeolocationService } from '../services/geolocation.service';
 
 @Component({
@@ -20,6 +20,7 @@ import { GeolocationService } from '../services/geolocation.service';
     ValidationClassesDirective,
     // FbLoginDirective,
     GoogleLoginDirective,
+    RouterLink,
   ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
