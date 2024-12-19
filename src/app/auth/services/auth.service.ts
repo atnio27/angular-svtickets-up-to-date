@@ -67,13 +67,12 @@ export class AuthService {
     const validateUrl = `${this.#authUrl}/validate/`;
 
     return this.#http.get<Observable<boolean>>(validateUrl).pipe(
-      map((response) => {
-        console.log(response);
+      map(() => {
+        console.log();
         this.#logged.set(true);
         return true;
       }),
-      catchError((error) => {
-        console.log(error);
+      catchError(() => {
         this.cookieService.delete('token');
         return of(false);
       })
