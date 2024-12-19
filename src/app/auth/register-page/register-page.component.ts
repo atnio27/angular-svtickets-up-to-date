@@ -10,7 +10,7 @@ import { EncodeBase64Directive } from '../../shared/directives/encode-base64.dir
 import { equalValues } from '../../shared/validators/equal-values.validator';
 import { User } from '../interfaces/user';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'register-page',
@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
     ValidationClassesDirective,
     EncodeBase64Directive,
+    RouterLink,
   ],
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css',
