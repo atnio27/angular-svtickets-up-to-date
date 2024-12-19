@@ -36,7 +36,7 @@
 
     <p class="text-danger" id="errorInfo"></p>
 
-    <a class="btn btn-secondary" href="/events" role="button">Create account</a>
+    <a class="btn btn-secondary" [routerLink]="['/auth/register']" role="button">Create account</a>
 
     <button type="button" (click)="login()" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
 
