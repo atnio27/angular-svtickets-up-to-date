@@ -14,13 +14,9 @@ export class TopMenuComponent {
 
   #authService = inject(AuthService);
 
-  isLogged = computed(() => this.#authService.isLogged().pipe());
+  isLogged = computed(() => this.#authService.getLogged());
 
   logout() {
     this.#authService.logout();
   }
-
-  // constructor() {
-  //   console.log(this.isLogged());
-  // }
 }
