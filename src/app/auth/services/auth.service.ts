@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { GoogleLogin, User, UserLogin } from '../interfaces/user';
 import { TokenResponse } from '../interfaces/auth-responses';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { UserRegisterResponse } from '../interfaces/user-responses';
 import { SsrCookieService } from 'ngx-cookie-service-ssr';
 
@@ -11,13 +11,13 @@ import { SsrCookieService } from 'ngx-cookie-service-ssr';
 })
 export class AuthService {
   #authUrl = 'auth';
-  #http = inject(HttpClient);
-
   #logged: WritableSignal<boolean> = signal(false);
+
+  #http = inject(HttpClient);
   cookieService = inject(SsrCookieService);
 
-  get logged() {
-    return this.#logged;
+  getLogged() {
+    return this.#logged();
   }
 
   login(user: UserLogin): Observable<void> {
@@ -48,6 +48,34 @@ export class AuthService {
     return this.#http.post<UserRegisterResponse>(registerUrl, user).pipe(
       map((resp) => {
         console.log(resp.email);
+      })
+    );
+  }
+
+  logout(): void {
+    this.cookieService.delete('token');
+    this.#logged.set(false);
+  }
+
+  isLogged(): Observable<boolean> {
+    if (this.getLogged() === false && this.cookieService.check('token')) {
+      return of(false);
+    }
+
+    if (this.getLogged()) return of(true);
+
+    const validateUrl = `${this.#authUrl}/validate/`;
+
+    return this.#http.get<Observable<boolean>>(validateUrl).pipe(
+      map((response) => {
+        console.log(response);
+        this.#logged.set(true);
+        return true;
+      }),
+      catchError((error) => {
+        console.log(error);
+        this.cookieService.delete('token');
+        return of(false);
       })
     );
   }

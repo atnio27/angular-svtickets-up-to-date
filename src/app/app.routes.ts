@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { loginActivateGuard } from './auth/guards/login-activate.guard';
 
 export const routes: Routes = [
   {
@@ -9,6 +10,7 @@ export const routes: Routes = [
     path: 'events',
     loadChildren: () =>
       import('./events/event.routes').then((m) => m.eventRoutes),
+    canActivate: [loginActivateGuard],
   },
   {
     path: '',

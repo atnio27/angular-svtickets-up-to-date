@@ -2,6 +2,7 @@
   <div class="container-fluid">
     <a class="navbar-brand" [routerLink]="['/events']">{{title}}</a>
     <ul class="navbar-nav me-auto mb-lg-0">
+      @if (isLogged()) {
       <li class="nav-item">
         <a class="nav-link active" [routerLink]="['/events']" [routerLinkActive]="['active']"
           [routerLinkActiveOptions]="{ exact: true }">
@@ -10,6 +11,7 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/events/add']" [routerLinkActive]="['active']">New event</a>
       </li>
+      }
 
     </ul>
     <ul class="navbar-nav">

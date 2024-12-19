@@ -14,10 +14,11 @@ import { GeolocationService } from '../services/geolocation.service';
 
 @Component({
   selector: 'login-page',
+  standalone: true,
   imports: [
     ReactiveFormsModule,
     ValidationClassesDirective,
-    FbLoginDirective,
+    // FbLoginDirective,
     GoogleLoginDirective,
   ],
   templateUrl: './login-page.component.html',

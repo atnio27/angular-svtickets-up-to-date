@@ -6,6 +6,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const cookieService = inject(SsrCookieService);
 
   const token = cookieService.get('token');
+  console.log(token);
 
   if (token) {
     // Estamos autenticados
